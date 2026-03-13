@@ -20,6 +20,12 @@ styles.css     — all visual styling, organized by section
 
 No build step. No dependencies beyond a Google Fonts import in the `<head>`.
 
+`index.html` must include standard `<meta>` tags in `<head>`:
+- `<meta charset="UTF-8">`
+- `<meta name="viewport" content="width=device-width, initial-scale=1.0">` (ensures correct rendering on phones)
+- `<meta name="description" content="...">` (placeholder description)
+- `<title>Dini Gourarie TAT Coaching</title>`
+
 ---
 
 ## Page Sections
@@ -32,19 +38,19 @@ No build step. No dependencies beyond a Google Fonts import in the `<head>`.
 ### 2. Hero
 - Large tagline (placeholder copy)
 - Short supporting subtext (1–2 sentences, placeholder)
-- A single CTA button: **"Book a Session"** — anchor link to the contact section
+- A single CTA button: **"Book a Session"** — `href="#contact"`, anchors to the Contact section
 
 ### 3. About Dini
-- A photo placeholder (a styled `<div>` with a soft background)
+- A photo placeholder (a styled `<div>`, 160×160px, circular via `border-radius: 50%`, soft `#F2EDE6` background)
 - A short biographical paragraph (placeholder copy)
 
 ### 4. The Offering — What is TAT?
 - A section explaining what TAT coaching is and what a session looks like
 - All placeholder copy for now; Dini will supply final text
 
-### 5. Contact / Book
+### 5. Contact / Book (`id="contact"`)
 - A **calendar link button** — links to an external booking URL (placeholder `#` for now)
-- An **email address** displayed as a `mailto:` link (placeholder for now)
+- An **email address** displayed as a `mailto:` link (placeholder `placeholder@example.com` for now)
 
 ---
 
@@ -72,10 +78,12 @@ Both fonts loaded via a single Google Fonts import in `<head>`.
 - Max-width: `720px`
 - Generous vertical padding between sections (`80px`)
 - Sections alternate background color for gentle visual rhythm — no hard borders or dividers
+  - Odd sections (Header, About, Contact): `#FAF7F2`
+  - Even sections (Hero, Offering): `#F2EDE6`
 
 ### Buttons
 - Pill-shaped (`border-radius: 999px`)
-- Dusty rose background, cream text
+- Dusty rose (`#C49A8A`) background, cream (`#FAF7F2`) text
 - CSS `:hover` color shift only — no animations, no shadows
 
 ---
