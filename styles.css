@@ -191,7 +191,8 @@ header {
   margin-bottom: 12px;
 }
 
-#contact p {
+/* Target only the intro paragraph, not .contact-email */
+#contact .section-inner > p {
   margin-bottom: 28px;
 }
 

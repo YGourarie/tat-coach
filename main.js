@@ -31,10 +31,15 @@ function animateHeroEntrance() {
   heroElements.filter(Boolean).forEach(function(element, index) {
     element.classList.add('animate');
 
-    const delayInMilliseconds = index * 150;
-    setTimeout(function() {
-      element.classList.add('visible');
-    }, delayInMilliseconds);
+    // requestAnimationFrame ensures the browser has painted the hidden
+    // state before we queue the reveal — without this, the first element
+    // (0ms delay) could get both classes in the same frame and skip the transition.
+    requestAnimationFrame(function() {
+      const delayInMilliseconds = index * 150;
+      setTimeout(function() {
+        element.classList.add('visible');
+      }, delayInMilliseconds);
+    });
   });
 }
 
