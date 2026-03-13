@@ -7,7 +7,7 @@
 
 ## Overview
 
-A single-page landing site for Dini Gourarie's TAT coaching business. The goal is a calm, readable presence that communicates who Dini is, what TAT coaching is, and gives visitors one clear path to book a session or get in touch. No JavaScript. No frameworks. Built for a non-frontend developer to read and maintain easily.
+A single-page landing site for Dini Gourarie's TAT coaching business. The goal is a calm, readable presence that communicates who Dini is, what TAT coaching is, and gives visitors one clear path to book a session or get in touch. Sleek and modern in feel, warm in tone. Built for a non-frontend developer to read and maintain easily.
 
 ---
 
@@ -16,6 +16,7 @@ A single-page landing site for Dini Gourarie's TAT coaching business. The goal i
 ```
 index.html     — all page content and structure
 styles.css     — all visual styling, organized by section
+main.js        — all animation logic (page load + scroll reveals)
 ```
 
 No build step. No dependencies beyond a Google Fonts import in the `<head>`.
@@ -84,13 +85,44 @@ Both fonts loaded via a single Google Fonts import in `<head>`.
 ### Buttons
 - Pill-shaped (`border-radius: 999px`)
 - Dusty rose (`#C49A8A`) background, cream (`#FAF7F2`) text
-- CSS `:hover` color shift only — no animations, no shadows
+- CSS `:hover` color shift only — no extra animations, no shadows
+
+---
+
+## Animations
+
+All animation is driven by `main.js`. CSS defines the visual states; JavaScript decides when to trigger them.
+
+### Approach
+- Elements that animate have two CSS classes: a default "hidden" state (`opacity: 0`, shifted down `20px`) and a `.visible` state (`opacity: 1`, `translateY(0)`)
+- `styles.css` defines the CSS `transition` on those elements (duration, easing)
+- `main.js` adds the `.visible` class at the right moment — JS owns the timing, CSS owns the look
+
+### Hero entrance (page load)
+- On `DOMContentLoaded`, JS adds `.visible` to hero elements in sequence with `setTimeout` staggering:
+  - `0ms` — hero heading
+  - `150ms` — hero subtext
+  - `300ms` — CTA button
+- Easing: `ease-out` | Duration: `0.6s`
+
+### Section scroll reveals (`IntersectionObserver`)
+- JS sets up one `IntersectionObserver` that watches all `<section>` elements
+- When a section enters the viewport, the observer adds `.visible` to it
+- Once visible, the observer stops watching that section (no re-animation)
+- Easing: `ease-out` | Duration: `0.5s`
+
+### `main.js` structure (plain English comments throughout)
+```
+// 1. Animate the hero elements in on page load
+// 2. Set up a scroll observer to reveal sections as they come into view
+```
+~25 lines total, no libraries.
 
 ---
 
 ## Constraints & Decisions
 
-- **No JavaScript** — the site is purely HTML + CSS
+- **JavaScript for animations** — JS drives timing; CSS drives appearance. Readable, separated concerns.
 - **No frameworks** — not even Tailwind; raw CSS with named class selectors
 - **Code readability first** — CSS organized with clear section comments (e.g., `/* === HERO === */`), HTML uses semantic elements and clear id/class names so a non-frontend developer can navigate and edit with confidence
 - **Placeholder copy throughout** — all text is placeholder until Dini supplies final copy
