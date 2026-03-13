@@ -64,21 +64,26 @@ function setupScrollReveal() {
     });
   }, options);
 
-  // For each non-hero section: if it's already in the viewport when
-  // the page loads, leave it alone (no animation needed — it's already
-  // visible). If it's below the fold, mark it invisible and let the
-  // observer reveal it when the user scrolls to it.
+  // For each non-hero section: if it's already in the viewport on load,
+  // animate it in after a delay so it doesn't just appear while the hero
+  // is still doing its entrance. The delay matches when the hero finishes
+  // (300ms stagger + 600ms transition = ~900ms, so we start at 800ms to
+  // overlap slightly and feel like one continuous sequence).
+  // Sections below the fold are handled by the observer as normal.
   const sections = document.querySelectorAll('section:not(#hero)');
   sections.forEach(function(section) {
     const bounds = section.getBoundingClientRect();
     const isAlreadyVisible = bounds.top < window.innerHeight && bounds.bottom > 0;
 
-    if (isAlreadyVisible) {
-      return;  // skip — no animation, just show it
-    }
-
     section.classList.add('animate');
-    observer.observe(section);
+
+    if (isAlreadyVisible) {
+      setTimeout(function() {
+        section.classList.add('visible');
+      }, 800);
+    } else {
+      observer.observe(section);
+    }
   });
 }
 
