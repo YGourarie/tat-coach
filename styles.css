@@ -198,7 +198,9 @@ header {
 .contact-email {
   margin-top: 20px;
   font-size: 15px;
-  opacity: 0.75;
+  /* Use color with alpha instead of opacity — same as .hero-subtext.
+     Avoids conflicting with the JS animation which also uses opacity. */
+  color: rgba(61, 46, 42, 0.75);
 }
 
 
